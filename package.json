@@ -1,0 +1,30 @@
+{
+  "name": "vidtube",
+  "version": "1.0.0",
+  "description": "A project inspired by youtube",
+  "types": "module.js",
+  "keywords": [
+    "node.js",
+    "maogoose",
+    "express",
+    "backend"
+  ],
+  "license": "ISC",
+  "author": "apu ray",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "prettier": "^3.9.6"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.9.4"
+  }
+}
