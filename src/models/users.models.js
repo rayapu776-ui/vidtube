@@ -13,7 +13,8 @@ updateAt Date
 */
 
 import mongoose , {Schema} from "mongoose";
-
+import bcrypt from "bcrypt"
+import { JsonWebTokenError } from "jsonwebtoken";
 const userSchema = new Schema(
     {
         username : {
@@ -60,6 +61,22 @@ const userSchema = new Schema(
     },
     {timestamps : true}
 )
+
+userSchema.pre("save", async function (next){
+    if(!this.modified("password")) return next();
+
+    this.password = bcrypt.hash(this.password, 10)
+    next();
+})
+
+userSchema.methods.isPasswordCorrect = async function (password){
+  return await bcrypt.compare(password , this.password)
+}
+
+userSchema.methods.generateAccessToken = function () {
+    // short lived access token
+    
+}
 
 
 export const User = mongoose.model("User", userSchema)
