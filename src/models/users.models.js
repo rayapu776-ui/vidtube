@@ -15,6 +15,7 @@ updateAt Date
 import mongoose , {Schema} from "mongoose";
 import bcrypt from "bcrypt"
 import { JsonWebTokenError } from "jsonwebtoken";
+
 const userSchema = new Schema(
     {
         username : {
@@ -75,7 +76,25 @@ userSchema.methods.isPasswordCorrect = async function (password){
 
 userSchema.methods.generateAccessToken = function () {
     // short lived access token
-    
+    return jwt.sign({
+          id :  this._id,
+         email : this.email,
+         username : this.username,
+         fullname : this.fullname
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {expiresIn : process.env.ACCESS_TOKEN_EXPIRY}
+);
+}
+
+userSchema.methods.generateRefreshToken = function () {
+    // short lived access token
+    return jwt.sign({
+          id :  this._id,
+    },
+    process.env.REFRESH_TOKEN_SECRET,
+    {expiresIn : process.env.REFRESH_TOKEN_EXPIRY}
+);
 }
 
 
